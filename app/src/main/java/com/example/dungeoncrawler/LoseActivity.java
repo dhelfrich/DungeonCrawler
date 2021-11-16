@@ -7,26 +7,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class GameplayActivity extends AppCompatActivity {
-
-    private Button loseButton;
-
+public class LoseActivity extends AppCompatActivity {
+    private Button menuButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gameplay);
+        setContentView(R.layout.activity_lose);
 
-        loseButton = (Button) findViewById(R.id.loseButton);
-        loseButton.setOnClickListener(new View.OnClickListener() {
+        menuButton = (Button) findViewById(R.id.menuButton);
+        menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivityLose();
+                openActivityMain();
             }
         });
     }
 
-    public void openActivityLose() {
-        Intent intent = new Intent(this, LoseActivity.class);
+    public void openActivityMain() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

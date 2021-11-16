@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DungeonCrawler">
         <activity
+            android:name=".LoseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProgressActivity"
+            android:exported="false" />
+        <activity
             android:name=".GameplayActivity"
             android:exported="false" />
         <activity android:name=".MainActivity">

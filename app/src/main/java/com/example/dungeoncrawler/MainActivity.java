@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button playButton;
+    private Button progressButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +25,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        progressButton = (Button) findViewById(R.id.progressButton);
+        progressButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivityProgress();
+            }
+        });
+
 
     }
 
     public void openActivityGameplay() {
         Intent intent = new Intent(this, GameplayActivity.class);
+        startActivity(intent);
+    }
+
+    public void openActivityProgress() {
+        Intent intent = new Intent(this, ProgressActivity.class);
         startActivity(intent);
     }
 }
