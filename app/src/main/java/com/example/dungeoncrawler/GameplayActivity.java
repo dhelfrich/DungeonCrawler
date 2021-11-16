@@ -9,20 +9,24 @@ import android.widget.Button;
 
 public class GameplayActivity extends AppCompatActivity {
 
-    private Button loseButton;
+    Button loseButton;
+
+    Player player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
 
-        loseButton = (Button) findViewById(R.id.loseButton);
+        loseButton = findViewById(R.id.loseButton);
         loseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openActivityLose();
             }
         });
+
+        player = new Player();
     }
 
     public void openActivityLose() {
