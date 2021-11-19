@@ -19,16 +19,10 @@ public class LoseActivity extends AppCompatActivity {
         global = Global.getInstance();
 
         menuButton = (Button) findViewById(R.id.menuButton);
-        menuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityMain();
-            }
-        });
+        menuButton.setOnClickListener(view -> openActivityMain());
     }
 
     public void openActivityMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

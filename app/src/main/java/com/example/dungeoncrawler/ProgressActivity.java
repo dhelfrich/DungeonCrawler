@@ -19,16 +19,10 @@ public class ProgressActivity extends AppCompatActivity {
         global = Global.getInstance();
 
         backButton = (Button) findViewById(R.id.backButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityMain();
-            }
-        });
+        backButton.setOnClickListener(view -> openActivityMain());
     }
 
     public void openActivityMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

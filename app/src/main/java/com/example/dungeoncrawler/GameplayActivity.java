@@ -6,20 +6,19 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.cards.Card;
+import com.example.cards.enemy.EnemyCard;
+import com.example.cards.others.HeroCard;
 
 public class GameplayActivity extends AppCompatActivity {
 
     Global global;
     Button loseButton;
-    Player player;
+    Board gameBoard = new Board();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,39 +27,43 @@ public class GameplayActivity extends AppCompatActivity {
         global = Global.getInstance();
 
         loseButton = findViewById(R.id.loseButton);
-        loseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityLose();
-            }
-        });
+        loseButton.setOnClickListener(view -> openActivityLose());
 
-        for(int i = 1; i < 10; i++) {
-            updateCard(i);
-        }
+        gameBoard.setUp();
+        updateAllCard();
     }
 
     @SuppressLint("SetTextI18n")
-    public void updateCard(int index) {
-        String hpTextId = "hpText" + index;
-        int resId1 = getResources().getIdentifier(hpTextId, "id", getPackageName());
-        TextView hpText = findViewById(resId1);
-        hpText.setText("Sample HP");
+    public void updateAllCard() {
+        for(int i = 1; i < 10; i++) {
+            String hpTextId = "hpText" + i;
+            int resId1 = getResources().getIdentifier(hpTextId, "id", getPackageName());
+            TextView hpText = findViewById(resId1);
 
-        String imageViewId = "imageView" + index;
-        int resId2 = getResources().getIdentifier(imageViewId, "id", getPackageName());
-        ImageView imageView = findViewById(resId2);
-        imageView.setImageResource(R.drawable.enemy_skeleton);
+            String imageViewId = "imageView" + i;
+            int resId2 = getResources().getIdentifier(imageViewId, "id", getPackageName());
+            ImageView imageView = findViewById(resId2);
 
-        String nameTextId = "nameText" + index;
-        int resId3 = getResources().getIdentifier(nameTextId, "id", getPackageName());
-        TextView nameText = findViewById(resId3);
-        nameText.setText("Sample Name");
+            String nameTextId = "nameText" + i;
+            int resId3 = getResources().getIdentifier(nameTextId, "id", getPackageName());
+            TextView nameText = findViewById(resId3);
 
-        String valueTextId = "valueText" + index;
-        int resId4 = getResources().getIdentifier(valueTextId, "id", getPackageName());
-        TextView valueText = findViewById(resId4);
-        valueText.setText("Sample Value");
+            String valueTextId = "valueText" + i;
+            int resId4 = getResources().getIdentifier(valueTextId, "id", getPackageName());
+            TextView valueText = findViewById(resId4);
+
+            Card card = gameBoard.getCard(i-1);
+            if (card.getClass().equals(HeroCard.class) || EnemyCard.class.isAssignableFrom(card.getClass())) {
+                hpText.setText(card.displayValue());
+                valueText.setText("");
+            }
+            else {
+                hpText.setText("");
+                valueText.setText(card.displayValue());
+            }
+            imageView.setImageResource(card.getResImage());
+            nameText.setText(card.getName());
+        }
     }
 
     public void openActivityLose() {
