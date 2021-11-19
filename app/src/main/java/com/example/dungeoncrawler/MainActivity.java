@@ -25,36 +25,16 @@ public class MainActivity extends AppCompatActivity {
         global = Global.getInstance();
 
         playButton = (Button) findViewById(R.id.playButton);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityGameplay();
-            }
-        });
+        playButton.setOnClickListener(view -> openActivityGameplay());
 
         progressButton = (Button) findViewById(R.id.progressButton);
-        progressButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityProgress();
-            }
-        });
+        progressButton.setOnClickListener(view -> openActivityProgress());
 
         settingButton = (Button) findViewById(R.id.settingButton);
-        settingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivitySetting();
-            }
-        });
+        settingButton.setOnClickListener(view -> openActivitySetting());
 
         exitButton = (Button) findViewById(R.id.exitButton);
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeActivityMain();
-            }
-        });
+        exitButton.setOnClickListener(view -> closeActivityMain());
     }
 
     public void openActivityGameplay() {
