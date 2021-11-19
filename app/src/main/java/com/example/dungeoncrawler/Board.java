@@ -14,20 +14,21 @@ public class Board {
 
     Card[][] board;
     Player player;
-    int[] curPosition;
+    int[] curPosition; //[ROW, COL]
 
     public Board(){
         board = new Card[3][3];
+        player = new Player();
         curPosition = new int[2];
+        curPosition[0] = 1;
+        curPosition[1] = 1;
     }
 
     public void setUp() {
-        player = new Player();
-        curPosition[0] = 1;
-        curPosition[1] = 1;
+
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
-                if(i == 1 && j == 1) {
+                if(i == curPosition[0] && j == curPosition[1]) {
                     board[i][j] = new HeroCard(player);
                 }
                 else {
@@ -61,7 +62,48 @@ public class Board {
         }
     }
 
+    //check if moving to the card at index is valid (if it is a neighbour or not..)
+    public boolean checkCard(int index) {
+        //get the col/row number that this index represents
+        int[] pos = indexToRowCol(index);
+        int col = (int) Math.floor((index-1) / 3);
+        int row = (index-1) % 3;
+
+        System.out.println("Hero at: row/col:" + curPosition[0] + ", " + curPosition[1]);
+        System.out.println("Player click at: index: " + index + ", row/col:" + pos[0] + ", " + pos[1]);
+
+        if(
+            ((curPosition[0] == pos[0]+1) && (curPosition[1] == pos[1])) ||
+            ((curPosition[0] == pos[0]-1) && (curPosition[1] == pos[1])) ||
+            ((curPosition[0] == pos[0]) && (curPosition[1] == pos[1]+1)) ||
+            ((curPosition[0] == pos[0]) && (curPosition[1] == pos[1]-1))
+        ) {
+            System.out.println("Valid Move! " + index);
+            return true;
+        }
+        else {
+            System.out.println("Invalid Move! " + index);
+            return false;
+        }
+
+    }
+
     public Card getCard(int index) {
-        return board[index / 3][index % 3];
+        int[] pos = indexToRowCol(index);
+
+        System.out.println("getcard(index = " + index + ")  row/col: " + pos[0] + ", " + pos[1]);
+        return board[pos[0]][pos[1]];
+    }
+
+    public void SetCurPosition(int index) {
+        curPosition = indexToRowCol(index);
+    }
+
+    public int[] indexToRowCol(int index) {
+        int row = (int) Math.floor((index-1) / 3);
+        int col = (index-1) % 3;
+        int[] result = {row, col};
+
+        return result;
     }
 }

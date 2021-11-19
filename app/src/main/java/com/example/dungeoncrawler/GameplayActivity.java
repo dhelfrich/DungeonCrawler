@@ -3,11 +3,13 @@ package com.example.dungeoncrawler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.cards.Card;
@@ -52,7 +54,18 @@ public class GameplayActivity extends AppCompatActivity {
             int resId4 = getResources().getIdentifier(valueTextId, "id", getPackageName());
             TextView valueText = findViewById(resId4);
 
-            Card card = gameBoard.getCard(i-1);
+            int layoutID = getResources().getIdentifier("card" + i, "id", getPackageName());
+            LinearLayout layout = findViewById(layoutID);
+            final int myIndex = i;
+            layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                clickCardButton(myIndex);
+
+            } });
+
+            Card card = gameBoard.getCard(i);
             if (card.getClass().equals(HeroCard.class) || EnemyCard.class.isAssignableFrom(card.getClass())) {
                 hpText.setText(card.displayValue());
                 valueText.setText("");
@@ -66,9 +79,24 @@ public class GameplayActivity extends AppCompatActivity {
         }
     }
 
+    public void clickCardButton(int index) {
+        boolean validMove = gameBoard.checkCard(index);
+
+        if(validMove) {
+            gameBoard.SetCurPosition(index);
+            gameBoard.setUp();
+            updateAllCard();
+        }
+        else {
+
+        }
+    }
+
     public void openActivityLose() {
         Intent intent = new Intent(this, LoseActivity.class);
         finish();
         startActivity(intent);
     }
 }
+
+;
