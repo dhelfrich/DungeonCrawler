@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cards.Card;
 import com.example.cards.enemy.EnemyCard;
@@ -28,6 +31,13 @@ public class GameplayActivity extends AppCompatActivity {
 
         loseButton = findViewById(R.id.loseButton);
         loseButton.setOnClickListener(view -> openActivityLose());
+
+        for(int i = 1; i < 10; i++) {
+            int layoutId = getResources().getIdentifier("card" + i, "id", getPackageName());
+            LinearLayout layout = findViewById(layoutId);
+            final int myIndex = i;
+            layout.setOnClickListener(something -> clickCardButton(myIndex));
+        }
 
         gameBoard.setUp();
         updateAllCard();
@@ -52,7 +62,7 @@ public class GameplayActivity extends AppCompatActivity {
             int resId4 = getResources().getIdentifier(valueTextId, "id", getPackageName());
             TextView valueText = findViewById(resId4);
 
-            Card card = gameBoard.getCard(i-1);
+            Card card = gameBoard.getCard(i);
             if (card.getClass().equals(HeroCard.class) || EnemyCard.class.isAssignableFrom(card.getClass())) {
                 hpText.setText(card.displayValue());
                 valueText.setText("");
@@ -63,6 +73,20 @@ public class GameplayActivity extends AppCompatActivity {
             }
             imageView.setImageResource(card.getResImage());
             nameText.setText(card.getName());
+        }
+    }
+
+    public void clickCardButton(int index) {
+        int validMove = gameBoard.checkMovement(index);
+
+        if(validMove >= 0) {
+            Log.i("info", "Valid Move! " + index);
+            gameBoard.moveCharacter(index, validMove);
+            updateAllCard();
+        }
+        else {
+            Log.i("info", "Invalid Move! " + index);
+            Toast.makeText(this, "Please select a valid entity", Toast.LENGTH_SHORT).show();
         }
     }
 
