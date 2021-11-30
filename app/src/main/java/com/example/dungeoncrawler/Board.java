@@ -149,7 +149,8 @@ public class Board {
             } else if (pickup instanceof EnemyCard) {
                 EnemyCard result = player.attackEnemy((EnemyCard) pickup); //attack the enemy
                 if(result == null) { //the enemy was killed
-                    moveCharacter(index, validMove);
+                    board[pos[0]][pos[1]] = new Item_Coin();
+                    //moveCharacter(index, validMove);
                 }
                 else{
                     board[pos[0]][pos[1]] = result; //update the enemy on the board to the resulting enemy with lowered health

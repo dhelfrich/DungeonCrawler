@@ -2,6 +2,8 @@ package com.example.dungeoncrawler;
 
 import com.example.cards.enemy.EnemyCard;
 import com.example.cards.item.ItemCard;
+import com.example.cards.item.Item_Coin;
+import com.example.cards.item.Item_RedPotion;
 import com.example.cards.weapon.WeaponCard;
 import com.example.cards.weapon.Weapon_Sword;
 
@@ -11,6 +13,9 @@ public class Player {
     int currHealth;
 
     WeaponCard currWeapon;
+
+
+    int currGold;
 
     public Player() {
         maxHealth = 10;
@@ -67,7 +72,15 @@ public class Player {
 
     //note: all items just heal for now
     public void consumeItem(ItemCard item) {
-        currHealth += item.getValue();
+        if(item instanceof Item_Coin){
+            currGold += item.getValue();
+        }
+        else if(item instanceof Item_RedPotion){
+            currHealth += item.getValue();
+        }
+        else {
+
+        }
     }
 
     public void loseWeapon() {
