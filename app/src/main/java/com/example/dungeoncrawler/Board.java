@@ -17,6 +17,8 @@ import com.example.cards.weapon.WeaponCard;
 import com.example.cards.weapon.Weapon_Staff;
 import com.example.cards.weapon.Weapon_Sword;
 
+
+
 public class Board {
 
     Card[][] board;
@@ -78,8 +80,8 @@ public class Board {
         int prevRow = curPosition[0];
         int prevCol = curPosition[1];
 
-        Card pickup = board[pos[0]][pos[1]];
-        processCard(pickup);
+        //Card pickup = board[pos[0]][pos[1]];
+        //processCard(pickup);
 
         switch (validMove) {
             case 0:
@@ -132,15 +134,33 @@ public class Board {
         return direction;
     }
 
-    public void processCard(Card pickup) {
-        if(pickup instanceof WeaponCard){
-            player.setCurrWeapon((WeaponCard) pickup);
-        }
-        else if(pickup instanceof EnemyCard){
-            player.attackEnemy((EnemyCard) pickup);
-        }
-        else if(pickup instanceof ItemCard) {
-            player.consumeItem((ItemCard) pickup);
+    public void processCardClick(int index) {
+        int validMove = checkMovement(index); //check that the move was valid first
+
+        if (validMove >= 0) {
+            Log.i("info", "Valid Move! " + index);
+
+            int[] pos = indexToRowCol(index);
+            Card pickup = board[pos[0]][pos[1]]; //the Card that was picked up
+
+            if (pickup instanceof WeaponCard) { //respond according to the type of card picked up
+                player.setCurrWeapon((WeaponCard) pickup); //equip the weapon
+                moveCharacter(index, validMove);
+            } else if (pickup instanceof EnemyCard) {
+                EnemyCard result = player.attackEnemy((EnemyCard) pickup); //attack the enemy
+                if(result == null) { //the enemy was killed
+                    moveCharacter(index, validMove);
+                }
+                else{
+                    board[pos[0]][pos[1]] = result; //update the enemy on the board to the resulting enemy with lowered health
+                }
+            } else if (pickup instanceof ItemCard) {
+                player.consumeItem((ItemCard) pickup); //consume the item
+                moveCharacter(index, validMove);
+            }
+        } else {
+            Log.i("info", "Invalid Move! " + index);
+            //Toast.makeText(this, "Please select a valid entity", Toast.LENGTH_SHORT).show();
         }
     }
 
