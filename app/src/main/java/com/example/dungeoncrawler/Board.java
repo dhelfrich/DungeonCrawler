@@ -1,15 +1,19 @@
 package com.example.dungeoncrawler;
 
+import android.content.ClipData;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.cards.Card;
+import com.example.cards.enemy.EnemyCard;
 import com.example.cards.enemy.Enemy_Imp;
 import com.example.cards.enemy.Enemy_Lizard;
 import com.example.cards.enemy.Enemy_Skeleton;
+import com.example.cards.item.ItemCard;
 import com.example.cards.item.Item_Coin;
 import com.example.cards.item.Item_RedPotion;
 import com.example.cards.others.HeroCard;
+import com.example.cards.weapon.WeaponCard;
 import com.example.cards.weapon.Weapon_Staff;
 import com.example.cards.weapon.Weapon_Sword;
 
@@ -74,6 +78,9 @@ public class Board {
         int prevRow = curPosition[0];
         int prevCol = curPosition[1];
 
+        Card pickup = board[pos[0]][pos[1]];
+        processCard(pickup);
+
         switch (validMove) {
             case 0:
                 if(curPosition[1] == 1) prevCol++;
@@ -124,6 +131,19 @@ public class Board {
         }
         return direction;
     }
+
+    public void processCard(Card pickup) {
+        if(pickup instanceof WeaponCard){
+            player.setCurrWeapon((WeaponCard) pickup);
+        }
+        else if(pickup instanceof EnemyCard){
+            player.attackEnemy((EnemyCard) pickup);
+        }
+        else if(pickup instanceof ItemCard) {
+            player.consumeItem((ItemCard) pickup);
+        }
+    }
+
 
     public Card getCard(int index) {
         int[] pos = indexToRowCol(index);
