@@ -158,6 +158,9 @@ public class Board {
                 player.consumeItem((ItemCard) pickup); //consume the item
                 moveCharacter(index, validMove);
             }
+
+            //update player HeroCard
+            board[curPosition[0]][curPosition[1]] = new HeroCard(player);
         } else {
             Log.i("info", "Invalid Move! " + index);
             //Toast.makeText(this, "Please select a valid entity", Toast.LENGTH_SHORT).show();
