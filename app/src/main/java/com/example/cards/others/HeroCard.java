@@ -9,7 +9,8 @@ public class HeroCard extends Card {
     Player player;
 
     public HeroCard(Player player) {
-        name = "Hero";
+        name = "No weapon";
+        if(player.getCurrWeapon() != null) name = player.getCurrWeapon().getName() + " "+ player.getCurrWeapon().getValue().toString();
         resImage = R.drawable.player_knight;
         description = "";
         this.player = player;

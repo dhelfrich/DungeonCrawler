@@ -77,17 +77,8 @@ public class GameplayActivity extends AppCompatActivity {
     }
 
     public void clickCardButton(int index) {
-        int validMove = gameBoard.checkMovement(index);
-
-        if(validMove >= 0) {
-            Log.i("info", "Valid Move! " + index);
-            gameBoard.moveCharacter(index, validMove);
-            updateAllCard();
-        }
-        else {
-            Log.i("info", "Invalid Move! " + index);
-            Toast.makeText(this, "Please select a valid entity", Toast.LENGTH_SHORT).show();
-        }
+        gameBoard.processCardClick(index);
+        updateAllCard();
     }
 
     public void openActivityLose() {

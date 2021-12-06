@@ -1,6 +1,7 @@
 package com.example.cards.weapon;
 
 import com.example.cards.Card;
+import com.example.cards.enemy.EnemyCard;
 
 public class WeaponCard extends Card {
 
@@ -22,5 +23,19 @@ public class WeaponCard extends Card {
 
     public float getValueFactor() {
         return valueFactor;
+    }
+
+    //weapon attacks enemy, returns resulting enemy (null if enemy killed)
+    public EnemyCard attackEnemy(EnemyCard target) {
+
+        if(durability >= target.getValue()) { //the enemy will die from attack
+            durability -= target.getValue();
+            return null;
+        }
+        else { //enemy survives attack, weapon is destroyed
+            target.setValue(target.getValue() - durability);
+            durability = 0;
+            return target;
+        }
     }
 }
