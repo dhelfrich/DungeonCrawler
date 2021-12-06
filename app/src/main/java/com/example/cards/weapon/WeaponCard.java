@@ -29,7 +29,9 @@ public class WeaponCard extends Card {
     public EnemyCard attackEnemy(EnemyCard target) {
 
         if(durability >= target.getValue()) { //the enemy will die from attack
-            durability -= target.getValue();
+            //decrease incoming damage if weapon is ranged
+            if(isRangeWeapon()) durability -= Math.max(target.getValue()-2, 0);
+            else durability -= target.getValue();
             return null;
         }
         else { //enemy survives attack, weapon is destroyed
@@ -38,4 +40,5 @@ public class WeaponCard extends Card {
             return target;
         }
     }
+
 }

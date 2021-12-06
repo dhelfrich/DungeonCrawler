@@ -14,7 +14,6 @@ public class Player {
 
     WeaponCard currWeapon;
 
-
     int currGold;
 
     public Player() {
@@ -42,6 +41,14 @@ public class Player {
 
     public void setCurrWeapon(WeaponCard currWeapon) {
         this.currWeapon = currWeapon;
+    }
+
+    public int getCurrGold() {
+        return currGold;
+    }
+
+    public void setCurrGold(int currGold) {
+        this.currGold = currGold;
     }
 
     //player will attack the given EnemyCard, return resulting EnemyCard (null if killed)
@@ -77,6 +84,7 @@ public class Player {
         }
         else if(item instanceof Item_RedPotion){
             currHealth += item.getValue();
+            if(currHealth > maxHealth) currHealth = maxHealth;
         }
         else {
 

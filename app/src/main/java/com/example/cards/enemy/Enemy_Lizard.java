@@ -9,6 +9,6 @@ public class Enemy_Lizard extends EnemyCard{
         name = "Lizard";
         resImage = R.drawable.enemy_lizard;
         description = "Common enemy. Deals damage that equals its health points.";
-        healthPoints = Utility.rndFromRange(5, 7);
+        healthPoints = Utility.rndFromRange(5, 8);
     }
 }

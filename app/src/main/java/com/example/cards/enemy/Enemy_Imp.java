@@ -9,6 +9,6 @@ public class Enemy_Imp extends EnemyCard{
         name = "Imp";
         resImage = R.drawable.enemy_imp;
         description = "Common enemy. Deals damage that equals its health points.";
-        healthPoints = Utility.rndFromRange(2, 4);
+        healthPoints = Utility.rndFromRange(3, 5);
     }
 }

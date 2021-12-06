@@ -47,27 +47,35 @@ public class Board {
         }
     }
 
+    public int getCurCoins() {
+        return player.getCurrGold();
+    }
+
+    public WeaponCard getCurWeapon() {
+        return player.getCurrWeapon();
+    }
+
     public Card generateNewCard() {
         int dice = Utility.rndFromRange(1,100);
-        //20% of the chance generate a item, 5% coins, 15% potions
+        //10% of the chance generate a item, 5% coins, 5% potions
         if(dice <= 5) {
             return new Item_Coin();
         }
-        else if (dice <= 20) {
+        else if (dice <= 10) {
             return new Item_RedPotion();
         }
-        //30% of the chance generate a weapon, 15% sword and staff
-        else if (dice <= 35) {
+        //30% of the chance generate a weapon, 20% sword and 10% staff
+        else if (dice <= 30) {
             return new Weapon_Sword();
         }
-        else if (dice <= 50) {
+        else if (dice <= 40) {
             return new Weapon_Staff();
         }
-        //50% of the chance generate a enemy, 20% Skeleton, 20% Imp, 10% Lizard
-        else if (dice <= 70) {
+        //60% of the chance generate a enemy, 20% Skeleton, 20% Imp, 20% Lizard
+        else if (dice <= 60) {
             return new Enemy_Skeleton();
         }
-        else if (dice <= 90) {
+        else if (dice <= 80) {
             return new Enemy_Imp();
         }
         else {
@@ -134,7 +142,7 @@ public class Board {
         return direction;
     }
 
-    public void processCardClick(int index) {
+    public int processCardClick(int index) {
         int validMove = checkMovement(index); //check that the move was valid first
 
         if (validMove >= 0) {
@@ -142,6 +150,7 @@ public class Board {
 
             int[] pos = indexToRowCol(index);
             Card pickup = board[pos[0]][pos[1]]; //the Card that was picked up
+            int tempValue = pickup.getValue();
 
             if (pickup instanceof WeaponCard) { //respond according to the type of card picked up
                 player.setCurrWeapon((WeaponCard) pickup); //equip the weapon
@@ -149,7 +158,7 @@ public class Board {
             } else if (pickup instanceof EnemyCard) {
                 EnemyCard result = player.attackEnemy((EnemyCard) pickup); //attack the enemy
                 if(result == null) { //the enemy was killed
-                    board[pos[0]][pos[1]] = new Item_Coin();
+                    board[pos[0]][pos[1]] = new Item_Coin(tempValue);
                     //moveCharacter(index, validMove);
                 }
                 else{
@@ -160,11 +169,11 @@ public class Board {
                 moveCharacter(index, validMove);
             }
 
-            //update player HeroCard
-            board[curPosition[0]][curPosition[1]] = new HeroCard(player);
+            return player.getCurrHealth() <= 0 ? 1 : 0;
         } else {
             Log.i("info", "Invalid Move! " + index);
             //Toast.makeText(this, "Please select a valid entity", Toast.LENGTH_SHORT).show();
+            return -1;
         }
     }
 
