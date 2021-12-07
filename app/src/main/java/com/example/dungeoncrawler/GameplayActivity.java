@@ -96,6 +96,7 @@ public class GameplayActivity extends AppCompatActivity {
         }
         survivedTurn++;
         global.setBestScore(Math.max(global.getBestScore(), gameBoard.getCurCoins()));
+        global.setRecentScore(gameBoard.getCurCoins());
         global.setMaxSurvivedTurn(Math.max(global.getMaxSurvivedTurn(), survivedTurn));
     }
 
