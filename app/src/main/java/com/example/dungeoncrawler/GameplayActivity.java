@@ -16,18 +16,28 @@ import android.widget.Toast;
 import com.example.cards.Card;
 import com.example.cards.enemy.EnemyCard;
 import com.example.cards.others.HeroCard;
+import com.example.cards.weapon.WeaponCard;
 
 public class GameplayActivity extends AppCompatActivity {
 
     Global global;
     Button loseButton;
     Board gameBoard = new Board();
+    ImageView coins, curWeapon;
+    TextView numCoins, curWeaponValue;
+    int survivedTurn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameplay);
         global = Global.getInstance();
+        survivedTurn = 0;
+
+        coins = findViewById(R.id.coins);
+        curWeapon = findViewById(R.id.curWeapon);
+        numCoins = findViewById(R.id.numCoins);
+        curWeaponValue = findViewById(R.id.curWeaponValue);
 
         loseButton = findViewById(R.id.loseButton);
         loseButton.setOnClickListener(view -> openActivityLose());
@@ -74,19 +84,30 @@ public class GameplayActivity extends AppCompatActivity {
             imageView.setImageResource(card.getResImage());
             nameText.setText(card.getName());
         }
+        numCoins.setText(String.valueOf(gameBoard.getCurCoins()));
+        WeaponCard weapon = gameBoard.getCurWeapon();
+        if(weapon != null) {
+            curWeapon.setImageResource(weapon.getResImage());
+            curWeaponValue.setText(weapon.displayValue());
+        }
+        else {
+            curWeapon.setImageResource(android.R.color.transparent);
+            curWeaponValue.setText("");
+        }
+        survivedTurn++;
+        global.setBestScore(Math.max(global.getBestScore(), gameBoard.getCurCoins()));
+        global.setMaxSurvivedTurn(Math.max(global.getMaxSurvivedTurn(), survivedTurn));
     }
 
     public void clickCardButton(int index) {
-        int validMove = gameBoard.checkMovement(index);
-
-        if(validMove >= 0) {
-            Log.i("info", "Valid Move! " + index);
-            gameBoard.moveCharacter(index, validMove);
-            updateAllCard();
+        int signal = gameBoard.processCardClick(index);
+        updateAllCard();
+        // Signal are integers from -1 to 1, -1 means invalid move, 0 means game continue, 1 means game over
+        if(signal == -1) {
+            Toast.makeText(this, "Please select a valid card", Toast.LENGTH_SHORT).show();
         }
-        else {
-            Log.i("info", "Invalid Move! " + index);
-            Toast.makeText(this, "Please select a valid entity", Toast.LENGTH_SHORT).show();
+        else if(signal == 1) {
+            openActivityLose();
         }
     }
 

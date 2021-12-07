@@ -9,7 +9,7 @@ public class Weapon_Sword extends WeaponCard{
         name = "Sword";
         resImage = R.drawable.weapon_sword;
         description = "Deals damage to enemies.";
-        durability = Utility.rndFromRange(3, 8);
+        durability = Utility.rndFromRange(3, 6);
         range = false;
         valueFactor = 1;
     }
