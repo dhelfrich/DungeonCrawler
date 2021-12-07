@@ -2,4 +2,5 @@
     <string name="app_name">Dungeon Crawler</string>
     <string name="menuTitle">Dungeon Crawler</string>
     <string name="menuCredits">Elijah A, Daniel H, Tiancheng S</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
