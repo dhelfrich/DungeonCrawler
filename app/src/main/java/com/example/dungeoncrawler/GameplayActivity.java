@@ -64,6 +64,7 @@ public class GameplayActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void updateAllCard() {
         for(int i = 1; i < 10; i++) {
+            // Find the views and assign data to them
             String hpTextId = "hpText" + i;
             int resId1 = getResources().getIdentifier(hpTextId, "id", getPackageName());
             TextView hpText = findViewById(resId1);
@@ -89,7 +90,9 @@ public class GameplayActivity extends AppCompatActivity {
                 hpText.setText("");
                 valueText.setText(card.displayValue());
             }
+
             imageView.setImageResource(card.getResImage());
+            imageView.getDrawable().setFilterBitmap(false);
             nameText.setText(card.getName());
         }
         numCoins.setText(String.valueOf(gameBoard.getCurCoins()));

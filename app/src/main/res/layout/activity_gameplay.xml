@@ -51,7 +51,8 @@
                     android:layout_marginHorizontal="5dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="#F44336" />
+                    android:textColor="#F44336"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/imageView1"
@@ -76,7 +77,8 @@
                     android:layout_marginHorizontal="5dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="#09B2FF" />
+                    android:textColor="#09B2FF"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -97,7 +99,8 @@
                     android:layout_marginHorizontal="5dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="#F44336" />
+                    android:textColor="#F44336"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -122,7 +125,8 @@
                     android:layout_marginHorizontal="5dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="#09B2FF" />
+                    android:textColor="#09B2FF"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -143,7 +147,8 @@
                     android:layout_marginHorizontal="5dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="#F44336" />
+                    android:textColor="#F44336"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -168,7 +173,8 @@
                     android:layout_marginHorizontal="5dp"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="#09B2FF" />
+                    android:textColor="#09B2FF"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>
