@@ -8,7 +8,7 @@ public class EmptyCard extends Card {
 
     public EmptyCard() {
         name = "Empty";
-        resImage = R.drawable.enemy_skeleton;
+        resImage = android.R.drawable.alert_dark_frame;
         description = "This card is empty.";
     }
 

@@ -6,12 +6,19 @@ import com.example.dungeoncrawler.R;
 
 public class HeroCard extends Card {
 
-    Player player;
+    private Player player;
 
-    public HeroCard(Player player) {
+    public HeroCard () {
         name = "Hero";
         resImage = R.drawable.player_knight;
         description = "";
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
         this.player = player;
     }
 

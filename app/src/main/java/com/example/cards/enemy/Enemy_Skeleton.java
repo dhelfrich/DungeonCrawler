@@ -9,6 +9,6 @@ public class Enemy_Skeleton extends EnemyCard{
         name = "Skeleton";
         resImage = R.drawable.enemy_skeleton;
         description = "Common enemy. Deals damage that equals its health points.";
-        healthPoints = Utility.rndFromRange(2, 3);
+        healthPoints = Utility.rndFromRange(1, 3);
     }
 }
