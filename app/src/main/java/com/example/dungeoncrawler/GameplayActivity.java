@@ -22,6 +22,9 @@ import com.example.cards.others.HeroCard;
 import com.example.cards.weapon.WeaponCard;
 
 public class GameplayActivity extends AppCompatActivity {
+    //GameplayActivity: A screen for the gameplay, display the content,
+    //receive user inputs and transform them to operations in data model
+    //Implemented Design Pattern: MVC(act as View and Controller)
 
     Global global;
     Button loseButton;

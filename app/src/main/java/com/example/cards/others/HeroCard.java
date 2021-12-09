@@ -5,6 +5,8 @@ import com.example.dungeoncrawler.Player;
 import com.example.dungeoncrawler.R;
 
 public class HeroCard extends Card {
+    //HeroCard: a subclass of Card but also an adapter of Player class
+    //Implemented Design Pattern: Adapter
 
     private Player player;
 

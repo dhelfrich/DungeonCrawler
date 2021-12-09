@@ -1,6 +1,9 @@
 package com.example.dungeoncrawler;
 
 public class Global {
+    //Global: class tracks the player's score, and it is shared among other classes
+    //Implemented Design Pattern: Singleton
+
     private static Global uniqueInstance = null;
 
     private int bestScore;

@@ -15,6 +15,8 @@ import com.example.creator.WeaponCardCreator;
 
 
 public class Board {
+    //Board: a class represent the game board, using 2d array to simulate the 3x3 grid,
+    //act as the Model in MVC pattern
 
     Card[][] board;
     Player player;

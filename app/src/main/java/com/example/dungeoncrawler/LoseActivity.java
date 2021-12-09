@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class LoseActivity extends AppCompatActivity {
+    //LoseActivity: a screen shows up after player lose the game
 
     Global global;
     private Button menuButton;
@@ -25,8 +26,8 @@ public class LoseActivity extends AppCompatActivity {
         TextView textScoreBest = findViewById(getResources().getIdentifier("textScoreBest", "id", getPackageName()));
         TextView textScoreRecent = findViewById(getResources().getIdentifier("textScoreRecent", "id", getPackageName()));
 
-        textScoreBest.setText(Integer.toString(global.getBestScore()));
-        textScoreRecent.setText(Integer.toString(global.getRecentScore()));
+        textScoreBest.setText(String.valueOf(global.getBestScore()));
+        textScoreRecent.setText(String.valueOf(global.getRecentScore()));
 
 
     }
