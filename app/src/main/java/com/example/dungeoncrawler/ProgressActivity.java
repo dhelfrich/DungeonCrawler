@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class ProgressActivity extends AppCompatActivity {
+    //ProgressActivity: a screen shows the game progress of player
 
     Global global;
     private Button backButton;

@@ -8,6 +8,7 @@ import com.example.cards.weapon.WeaponCard;
 import com.example.cards.weapon.Weapon_Sword;
 
 public class Player {
+    //Player: store player's status
 
     int maxHealth;
     int currHealth;

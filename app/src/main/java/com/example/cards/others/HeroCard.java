@@ -5,13 +5,22 @@ import com.example.dungeoncrawler.Player;
 import com.example.dungeoncrawler.R;
 
 public class HeroCard extends Card {
+    //HeroCard: a subclass of Card but also an adapter of Player class
+    //Implemented Design Pattern: Adapter
 
-    Player player;
+    private Player player;
 
-    public HeroCard(Player player) {
+    public HeroCard () {
         name = "Hero";
         resImage = R.drawable.player_knight;
         description = "";
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
         this.player = player;
     }
 

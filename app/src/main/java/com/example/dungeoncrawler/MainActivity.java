@@ -10,9 +10,10 @@ import android.widget.LinearLayout;
 
 //should be just activity not appcompat?
 public class MainActivity extends AppCompatActivity {
+    //MainActivity: Start activity which shows the main menu of the game
 
     private Global global;
-
+    //Implemented Design Pattern: Observer(onClickListener on buttons)
     private Button playButton;
     private Button progressButton;
     private Button settingButton;

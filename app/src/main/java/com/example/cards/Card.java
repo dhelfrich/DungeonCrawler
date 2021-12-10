@@ -1,6 +1,9 @@
 package com.example.cards;
 
 public abstract class Card {
+    //Card: the abstract super class of all types of card, contains name, image resource, and description
+    //Implemented design pattern: Template
+
     protected String name;
     protected int resImage;
     protected String description;

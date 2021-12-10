@@ -1,29 +1,27 @@
 package com.example.dungeoncrawler;
 
-import android.content.ClipData;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.cards.Card;
 import com.example.cards.enemy.EnemyCard;
-import com.example.cards.enemy.Enemy_Imp;
-import com.example.cards.enemy.Enemy_Lizard;
-import com.example.cards.enemy.Enemy_Skeleton;
 import com.example.cards.item.ItemCard;
-import com.example.cards.item.Item_Coin;
-import com.example.cards.item.Item_RedPotion;
 import com.example.cards.others.HeroCard;
 import com.example.cards.weapon.WeaponCard;
-import com.example.cards.weapon.Weapon_Staff;
-import com.example.cards.weapon.Weapon_Sword;
-
+import com.example.creator.CardCreator;
+import com.example.creator.EnemyCardCreator;
+import com.example.creator.ItemCardCreator;
+import com.example.creator.OtherCardCreator;
+import com.example.creator.WeaponCardCreator;
 
 
 public class Board {
+    //Board: a class represent the game board, using 2d array to simulate the 3x3 grid,
+    //act as the Model in MVC pattern
 
     Card[][] board;
     Player player;
     int[] curPosition; //[ROW, COL]
+    CardCreator enemyCreator, weaponCreator, itemCreator, otherCreator;
 
     public Board(){
         board = new Card[3][3];
@@ -31,6 +29,11 @@ public class Board {
         curPosition = new int[2];
         curPosition[0] = 1;
         curPosition[1] = 1;
+
+        enemyCreator = new EnemyCardCreator();
+        weaponCreator = new WeaponCardCreator();
+        itemCreator = new ItemCardCreator();
+        otherCreator = new OtherCardCreator();
     }
 
     public void setUp() {
@@ -38,7 +41,9 @@ public class Board {
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
                 if(i == 1 && j == 1) {
-                    board[i][j] = new HeroCard(player);
+                    HeroCard hero = (HeroCard) otherCreator.generateCard("Hero");
+                    hero.setPlayer(player);
+                    board[i][j] = hero;
                 }
                 else {
                     board[i][j] = generateNewCard();
@@ -59,27 +64,27 @@ public class Board {
         int dice = Utility.rndFromRange(1,100);
         //10% of the chance generate a item, 5% coins, 5% potions
         if(dice <= 5) {
-            return new Item_Coin();
+            return itemCreator.generateCard("Coin");
         }
         else if (dice <= 10) {
-            return new Item_RedPotion();
+            return itemCreator.generateCard("RedPotion");
         }
         //30% of the chance generate a weapon, 20% sword and 10% staff
         else if (dice <= 30) {
-            return new Weapon_Sword();
+            return weaponCreator.generateCard("Sword");
         }
         else if (dice <= 40) {
-            return new Weapon_Staff();
+            return weaponCreator.generateCard("Staff");
         }
-        //60% of the chance generate a enemy, 20% Skeleton, 20% Imp, 20% Lizard
+        //60% of the chance generate a enemy, 20% Skeleton, 30% Imp, 10% Lizard
         else if (dice <= 60) {
-            return new Enemy_Skeleton();
+            return enemyCreator.generateCard("Skeleton");
         }
-        else if (dice <= 80) {
-            return new Enemy_Imp();
+        else if (dice <= 90) {
+            return enemyCreator.generateCard("Imp");
         }
         else {
-            return new Enemy_Lizard();
+            return enemyCreator.generateCard("Lizard");
         }
     }
 
@@ -158,7 +163,9 @@ public class Board {
             } else if (pickup instanceof EnemyCard) {
                 EnemyCard result = player.attackEnemy((EnemyCard) pickup); //attack the enemy
                 if(result == null) { //the enemy was killed
-                    board[pos[0]][pos[1]] = new Item_Coin(tempValue);
+                    Card c = itemCreator.generateCard("Coin");
+                    c.setValue(tempValue);
+                    board[pos[0]][pos[1]] = c;
                     //moveCharacter(index, validMove);
                 }
                 else{

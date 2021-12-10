@@ -6,10 +6,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +22,9 @@ import com.example.cards.others.HeroCard;
 import com.example.cards.weapon.WeaponCard;
 
 public class GameplayActivity extends AppCompatActivity {
+    //GameplayActivity: A screen for the gameplay, display the content,
+    //receive user inputs and transform them to operations in data model
+    //Implemented Design Pattern: MVC(act as View and Controller)
 
     Global global;
     Button loseButton;
@@ -46,7 +52,12 @@ public class GameplayActivity extends AppCompatActivity {
             int layoutId = getResources().getIdentifier("card" + i, "id", getPackageName());
             LinearLayout layout = findViewById(layoutId);
             final int myIndex = i;
-            layout.setOnClickListener(something -> clickCardButton(myIndex));
+            layout.setOnClickListener(view -> clickCardButton(myIndex));
+            layout.setLongClickable(true);
+            layout.setOnLongClickListener(view -> {
+                longClickCardButton(myIndex);
+                return true;
+            });
         }
 
         gameBoard.setUp();
@@ -56,6 +67,7 @@ public class GameplayActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void updateAllCard() {
         for(int i = 1; i < 10; i++) {
+            // Find the views and assign data to them
             String hpTextId = "hpText" + i;
             int resId1 = getResources().getIdentifier(hpTextId, "id", getPackageName());
             TextView hpText = findViewById(resId1);
@@ -81,7 +93,9 @@ public class GameplayActivity extends AppCompatActivity {
                 hpText.setText("");
                 valueText.setText(card.displayValue());
             }
+
             imageView.setImageResource(card.getResImage());
+            imageView.getDrawable().setFilterBitmap(false);
             nameText.setText(card.getName());
         }
         numCoins.setText(String.valueOf(gameBoard.getCurCoins()));
@@ -96,6 +110,7 @@ public class GameplayActivity extends AppCompatActivity {
         }
         survivedTurn++;
         global.setBestScore(Math.max(global.getBestScore(), gameBoard.getCurCoins()));
+        global.setRecentScore(gameBoard.getCurCoins());
         global.setMaxSurvivedTurn(Math.max(global.getMaxSurvivedTurn(), survivedTurn));
     }
 
@@ -109,6 +124,33 @@ public class GameplayActivity extends AppCompatActivity {
         else if(signal == 1) {
             openActivityLose();
         }
+    }
+
+    public void longClickCardButton(int index) {
+        Card card = gameBoard.getCard(index);
+
+        showPopupWindowLongClick(coins, card);
+    }
+
+    public void showPopupWindowLongClick(View view, Card card) {
+        //Source: https://stackoverflow.com/questions/5944987/how-to-create-a-popup-window-popupwindow-in-android
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_long_click, null);
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        popupWindow.setElevation(20);
+
+        //set attributes inside popup window
+        ImageView imageLongClick = popupView.findViewById(R.id.imageLongClick);
+        imageLongClick.setImageResource(card.getResImage());
+        TextView nameLongClick = popupView.findViewById(R.id.nameLongClick);
+        nameLongClick.setText(card.getName());
+        TextView descriptionLongClick = popupView.findViewById(R.id.descriptionLongClick);
+        descriptionLongClick.setText(card.getDescription());
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 
     public void openActivityLose() {
